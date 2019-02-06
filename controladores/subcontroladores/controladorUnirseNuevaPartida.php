@@ -1,0 +1,12 @@
+<?php
+if(isset($_POST['IDPartida'])){
+    if(ModeloPartidas::comprobarPartida($_POST['IDPartida'])){
+        ModeloPartidas::asignarContrincante($_POST['IDPartida'],$usuario['IDJugador']);
+        include('controladores/subcontroladores/controladorPartidas.php');
+    }else{
+        include("vistas/vistaUnirsePartida.php");
+    }
+}else{
+    include("vistas/vistaUnirsePartida.php");
+}
+unset($_POST['unirse']);

@@ -2,9 +2,8 @@
 
 class ModeloCasillas
 {
-    public function __construct()
+    function __construct()
     {
-
     }
 
     // Funcion que te devuelve todas las casillas de un tablero
@@ -75,7 +74,6 @@ class ModeloCasillas
                                                         AND IDTablero = $IDTablero");
         
         $nombreBarco = mysqli_fetch_array($registrosNombreBarco)['NombreBarco'];
-        echo '<script>console.log("' . $nombreBarco . '")</script>';
         // Hacemos una consulta para saber todos los barco que tienen ese nombre en el tablero
         $registrosBarco = mysqli_query($conexion, "SELECT *
                                                     FROM casillas

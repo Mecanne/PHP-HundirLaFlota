@@ -2,7 +2,6 @@
 
 class ModeloJugador
 {
-
     function __construct()
     {
     }

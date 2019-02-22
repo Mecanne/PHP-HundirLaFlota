@@ -2,6 +2,10 @@
 
 class ModeloBase
 {
+    function __construct()
+    {
+    }
+    
     static function crearConexion($base)
     {
         $conexion = mysqli_connect("localhost", "root", "", $base)

@@ -3,7 +3,8 @@
 class ModeloTableros
 {
     function __construct()
-    { }
+    {
+    }
 
     static function crearTablero($IDJugador, $IDPartida)
     {

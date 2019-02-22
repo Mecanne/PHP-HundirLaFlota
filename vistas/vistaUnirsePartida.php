@@ -17,7 +17,7 @@
         </div>
             <table>
             <?php
-            if (sizeOf($partidasDisponibles) > 0) {
+            if (count($partidasDisponibles) > 0) {
                 ?>
                 <div class="table-box">
                     <table class="table table-striped table-responsive">
@@ -30,10 +30,10 @@
                         <tbody>
                         <?php
 
-                        for ($i = 0; $i < sizeof($partidasDisponibles); $i++) {
+                        for ($i = 0; $i < count($partidasDisponibles); $i++) {
                             $partida = $partidasDisponibles[$i];
                             echo '<tr>';
-                            for ($j = 1; $j < sizeof($partida); $j++) {
+                            for ($j = 1; $j < count($partida); $j++) {
                                 echo '<td> ' . $partida[$j] . '</td>';
                             }
                             echo '<td>';

@@ -13,7 +13,6 @@ class ModeloPartidas
         $creada = true;
         $registros = mysqli_query($conexion, 'SELECT COUNT(*) as \'Cantidad\' FROM Partidas WHERE IDHost = \'' . $idHost . '\' AND IDEstadoPartida = 1');
         $cantidad_de_partidas = mysqli_fetch_array($registros)['Cantidad'];
-        echo '<script>console.log("' . $cantidad_de_partidas . '")</script>';
         if ($cantidad_de_partidas < 3) {
             mysqli_query($conexion, "INSERT INTO partidas(IDHost,IDEstadoPartida) VALUES('" . $idHost . "','1')")
                 or $creada = false;

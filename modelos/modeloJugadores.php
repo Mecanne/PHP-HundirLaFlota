@@ -55,6 +55,19 @@ class ModeloJugador
         ModeloBase::cerrarConexion($conexion);
         return $arrayUsuario;
     }
+
+    static function getJugadorById($idjugador)
+    {
+        // Creamos la conexion
+        $conexion = ModeloBase::crearConexion("flota");
+        // Recogemos los datos del usuario
+        $usuario = mysqli_query($conexion, "SELECT * FROM jugadores WHERE IDJugador = '" . $idjugador . "'");
+        // Almacenamos los datos del usuario en un array.
+        $arrayUsuario = mysqli_fetch_array($usuario);
+        // Cerramos la conexion y retornamos el array del usuario.
+        ModeloBase::cerrarConexion($conexion);
+        return $arrayUsuario;
+    }
 }
 
 ?>

@@ -1,7 +1,0 @@
-Estados de las partidas:
-
-1 - Creada y usuario host colocando los barcos.
-2 - Barcos del host colocados y usuario contrincante colocando los barcos.
-3 - Turno del jugador 1
-4 - Turno del jugador 2
-5 - Finalizado.

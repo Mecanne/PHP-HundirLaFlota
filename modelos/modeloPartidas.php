@@ -17,11 +17,37 @@ class ModeloPartidas
         if ($cantidad_de_partidas < 3) {
             mysqli_query($conexion, "INSERT INTO partidas(IDHost,IDEstadoPartida) VALUES('" . $idHost . "','1')")
                 or $creada = false;
-            ModeloBase::cerrarConexion($conexion);
+
         } else {
             $creada = false;
         }
+        if ($creada) {
+            $registros = mysqli_query($conexion, 'SELECT MAX(IDPartida) as IDPartida FROM partidas WHERE IDHost = ' . $idHost);
+            $partida = mysqli_fetch_array($registros);
+            $creada = ModeloTableros::crearTablero($idHost, $partida['IDPartida']);
+        }
+        ModeloBase::cerrarConexion($conexion);
         return $creada;
+    }
+
+    static function cambiarEstadoPartida($idpartida,$estado){
+        $conexion = ModeloBase::crearConexion('flota');
+        mysqli_query($conexion,'UPDATE partidas
+                                SET IDEstadoPartida = ' . $estado . '
+                                WHERE IDPartida = ' .$idpartida);
+        ModeloBase::cerrarConexion($conexion);
+    }
+
+    static function getPartida($idPartida)
+    {
+        $conexion = ModeloBase::crearConexion("flota");
+        $registros = mysqli_query($conexion, "SELECT * FROM partidas WHERE IDPartida = '" . $idPartida . "'");
+        if ($partida = mysqli_fetch_array($registros)) {
+            ModeloBase::cerrarConexion($conexion);
+            return $partida;
+        }
+        ModeloBase::cerrarConexion($conexion);
+        return false;
     }
 
     static function borrarPartida($idPartida)
@@ -34,6 +60,30 @@ class ModeloPartidas
         return $borrada;
     }
 
+    // Partidas a las que puedes unirte
+    static function listarPartidasPosibles($idHost)
+    {
+        // Creamos la conexion a la base de datos
+        $conexion = ModeloBase::crearConexion("flota");
+        // Recogemos todas las partidas a las que puede unirse el jugador.
+        $registros = mysqli_query($conexion, "SELECT IDPartida, jh.Usuario as 'Host'
+                                                FROM partidas
+                                                LEFT JOIN jugadores jh ON partidas.IDHost = jh.IDJugador
+                                                WHERE partidas.IDContrincante IS NULL
+                                                    AND partidas.IDHost <>" . $idHost);
+        // Creamos el array que contendrá las partidas que tiene el jugador.
+        $partidas = array();
+        // Mientras haya paertias en la consulta, se las añadiremos al array.
+        while ($reg = mysqli_fetch_row($registros)) {
+            $partidas[] = $reg;
+        }
+        // Cerramos la conexion.
+        ModeloBase::cerrarConexion($conexion);
+        // Devolvemos las partidas.
+        return $partidas;
+    }
+
+    // Partidas donde es tu turno
     static function listarPartidasDisponibles($idHost)
     {
         /**
@@ -68,6 +118,7 @@ class ModeloPartidas
         return $partidas;
     }
 
+    // Partidas donde es el turno del contrincante
     static function listarPartidasEnEspera($idHost)
     {
         /**
@@ -101,6 +152,7 @@ class ModeloPartidas
         return $partidas;
     }
 
+    // Partidas finalizadas
     static function listarPartidasAcabadas($idHost)
     {
         // Creamos la conexion a la base de datos
@@ -136,47 +188,16 @@ class ModeloPartidas
         return $estado;
     }
 
-    static function comprobarPartida($IDPartida)
-    {
-        $conexion = ModeloBase::crearConexion('flota');
-        $partidas = mysqli_query($conexion, "SELECT * FROM Partidas WHERE IDPartida = '" . $IDPartida . "'");
-        ModeloBase::cerrarConexion($conexion);
-        if ($partida = mysqli_fetch_array($partidas)) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
-    static function comprobarContrincantePartida($IDPartida)
-    {
-        $conexion = ModeloBase::crearConexion('flota');
-        $partidas = mysqli_query($conexion, "SELECT * 
-                                            FROM Partidas 
-                                            WHERE IDPartida = '" . $IDPartida . "' 
-                                                AND IDContrincante IS NULL");
-        ModeloBase::cerrarConexion($conexion);
-        if ($partida = mysqli_fetch_array($partidas)) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
+    // Asignar un contrincante a una partida.
     static function asignarContrincante($IDPartida, $IDContrincante)
     {
         $conexion = ModeloBase::crearConexion("flota");
-        if(ModeloPartidas::comprobarContrincantePartida($IDPartida)){
-            mysqli_query($conexion, "UPDATE partidas
-                                    SET IDContrincante = '" . $IDContrincante . "'
-                                    WHERE IDPartida = '" . $IDPartida . "'");
-            ModeloBase::cerrarConexion($conexion);
-            return true;
-        }
+        mysqli_query($conexion, "UPDATE partidas
+                                SET IDContrincante = '" . $IDContrincante . "'
+                                WHERE IDPartida = '" . $IDPartida . "'");
         ModeloBase::cerrarConexion($conexion);
-        return false;
+        ModeloTableros::crearTablero($IDContrincante,$IDPartida);
+        return true;
     }
 
 }

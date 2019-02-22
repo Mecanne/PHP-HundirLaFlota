@@ -10,18 +10,21 @@
 </head>
 <body>
     <div class="container">
+        <div class="img-container">
+            <img src="img/logo.png" alt="BattleShip" class="mx-auto d-block img-fluid">
+        </div>
         <?php
         if (isset($_POST['registro'])) {
             if ($registrado) {
                 ?>
-                    <div class="alert alert-success text-center">
+                    <div class="alert alert-success">
                         <p>El usuario se ha registrado con exito.</p>
                     </div>
                     <?php
 
                 } else {
                     ?>
-                    <div class="alert alert-danger text-center col-sm-10 mx-auto d-block">
+                    <div class="alert alert-danger">
                         <p>El usuario no se ha podido registrar.</p>
                     </div>
                     <?php
@@ -36,11 +39,7 @@
                     <?php
 
                 }
-                ?>
-        
-        <div class="container-fluid img-container">
-            <!--<img src="img/logo.png" alt="BattleShip" class="mx-auto d-block img-fluid">-->
-        </div>
+        ?>
         <div class="container">
             <form method="post" action="" class="form mx-auto d-block jumbotron">
                 <div class="from-group">

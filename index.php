@@ -3,6 +3,8 @@ session_start();
 include("modelos/modeloBase.php");
 include("modelos/modeloPartidas.php");
 include("modelos/modeloJugadores.php");
+include("modelos/modeloTableros.php");
+include("modelos/modeloCasillas.php");
 
 // Comprobamos si hay iniciada una sesion
 if (isset($_SESSION['usuario'])) {

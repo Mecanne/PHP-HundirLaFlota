@@ -16,7 +16,7 @@ if (isset($_POST['cambiar-direccion'])) {
 
 
 // Transformamos el tablero para restringir posisiones.
-$arrayTableroJugador = ModeloTableros::restringirTablero($arrayTableroJugador, $tablero['IDTablero']);
+$arrayTableroJugador = ModeloTableros::restringirTablero($arrayTableroJugador);
 
 // Si esta establecida una posicion significa que queremos colocar un barco.
 if (isset($_POST['posicion'])) {
@@ -39,7 +39,7 @@ if (isset($_POST['posicion'])) {
         $arrayTableroJugador = ModeloTableros::cargarTablero($partida['IDPartida'], $partida['IDContrincante']);
     }
     // Transformamos el tablero para restringir posisiones.
-    $arrayTableroJugador = ModeloTableros::restringirTablero($arrayTableroJugador, $tablero['IDTablero']);
+    $arrayTableroJugador = ModeloTableros::restringirTablero($arrayTableroJugador);
 
     // Si el barco que hemos introducido era el ultimo, 
     if (ModeloTableros::longitudSiguienteBarco($tablero['IDTablero']) == 0) {

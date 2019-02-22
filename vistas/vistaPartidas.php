@@ -35,7 +35,7 @@
             <h2>Partidas disponibles</h2>
         </div>
         <?php
-        if (sizeOf($partidasDisponibles) > 0) {
+        if (count($partidasDisponibles) > 0) {
             ?>
                 <div class="table-box">
                     <table class="table table-striped table-responsive">
@@ -50,16 +50,16 @@
                         <tbody>
                         <?php
 
-                        for ($i = 0; $i < sizeof($partidasDisponibles); $i++) {
+                        for ($i = 0; $i < count($partidasDisponibles); $i++) {
                             $partida = $partidasDisponibles[$i];
                             echo '<tr>';
-                            for ($j = 1; $j < sizeof($partida); $j++) {
+                            for ($j = 1; $j < count($partida); $j++) {
                                 echo '<td> ' . $partida[$j] . '</td>';
                             }
                             echo '<td>';
                             echo '<form action="" method="POST" style="display:flex;justify-content:center;">';
                             echo '<input type="hidden" name="idpartida" value="' . $partida[0] . '">';
-                            if($partida[sizeof($partida) - 2] != ''){
+                            if($partida[count($partida) - 2] != ''){
                                 echo '<input type="submit" name="jugar-partida" class="btn btn-play" value="Jugar">';
                             } else {
                                 echo '<input type="submit" name="borrar-partida" class="btn btn-danger" value="Borrar">';
@@ -84,7 +84,7 @@
             <h2>Partidas a la espera del contrincante</h2>
         </div>
         <?php
-        if (sizeOf($partidasEnEspera) > 0) {
+        if (count($partidasEnEspera) > 0) {
             ?>
                 <div class="table-box">
                     <table class="table table-striped table-responsive">
@@ -99,10 +99,10 @@
                         <tbody>
                         <?php
 
-                        for ($i = 0; $i < sizeof($partidasEnEspera); $i++) {
+                        for ($i = 0; $i < count($partidasEnEspera); $i++) {
                             $partida = $partidasEnEspera[$i];
                             echo '<tr>';
-                            for ($j = 1; $j < sizeof($partida); $j++) {
+                            for ($j = 1; $j < count($partida); $j++) {
                                 echo '<td> ' . $partida[$j] . '</td>';
                             }
                             echo '<td>';
@@ -129,7 +129,7 @@
             <h2>Partidas acabadas</h2>
         </div>
         <?php
-        if (sizeOf($partidasAcabadas) > 0) {
+        if (count($partidasAcabadas) > 0) {
             ?>
                 <div class="table-box">
                     <table class="table table-striped table-responsive">
@@ -144,10 +144,10 @@
                         <tbody>
                         <?php
 
-                        for ($i = 0; $i < sizeof($partidasAcabadas); $i++) {
+                        for ($i = 0; $i < count($partidasAcabadas); $i++) {
                             $partida = $partidasAcabadas[$i];
                             echo '<tr>';
-                            for ($j = 1; $j < sizeof($partida); $j++) {
+                            for ($j = 1; $j < count($partida); $j++) {
                                 echo '<td> ' . $partida[$j] . '</td>';
                             }
                             echo '<td>';
